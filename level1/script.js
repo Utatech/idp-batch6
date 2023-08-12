@@ -7,7 +7,15 @@ const markAllCompletedBtn = document.getElementById('mark-all-completed');
 
 let tasks = [];
 
-taskForm.addEventListener('submit', function (event) {
+// Event listeners
+taskForm.addEventListener('submit', handleSubmit);
+taskList.addEventListener('change', handleTaskChange);
+taskList.addEventListener('click', handleTaskDelete);
+markAllCompletedBtn.addEventListener('click', handleMarkAllCompleted);
+clearTasksBtn.addEventListener('click', handleClearTasks);
+
+// Functions
+function handleSubmit(event) {
     event.preventDefault();
     const taskText = taskInput.value.trim();
     if (taskText !== '') {
@@ -15,48 +23,44 @@ taskForm.addEventListener('submit', function (event) {
         updateTaskList();
         taskInput.value = '';
     }
-});
+}
 
-taskList.addEventListener('change', function (event) {
+function handleTaskChange(event) {
     const index = event.target.dataset.index;
     tasks[index].completed = event.target.checked;
     updateTaskList();
-});
+}
 
-taskList.addEventListener('click', function (event) {
+function handleTaskDelete(event) {
     if (event.target.classList.contains('delete-task')) {
         const index = event.target.dataset.index;
         tasks.splice(index, 1);
         updateTaskList();
     }
-});
+}
 
-markAllCompletedBtn.addEventListener('click', function () {
+function handleMarkAllCompleted() {
     const allCompleted = tasks.every(task => task.completed);
-    tasks.forEach(task => task.completed = !allCompleted);
+    tasks.forEach(task => (task.completed = !allCompleted));
     updateTaskList();
-});
+}
 
-clearTasksBtn.addEventListener('click', function () {
+function handleClearTasks() {
     tasks = [];
     updateTaskList();
-});
-// ... kode sebelumnya ...
+}
 
 function updateTaskList() {
     taskList.innerHTML = '';
     let remainingCount = 0;
     tasks.forEach((task, index) => {
         const taskItem = document.createElement('li');
-        taskItem.className = 'task';
-        if (task.completed) {
-            taskItem.classList.add('completed');
-        }
+        taskItem.className = `task ${task.completed ? 'completed' : ''}`;
         taskItem.innerHTML = `
-                    <input type="checkbox" data-index="${index}" ${task.completed ? 'checked' : ''}>
-                    <span>${task.text}</span>
-                    <button class="delete-task" data-index="${index}">Hapus</button>
-                `;
+            <input type="checkbox" data-index="${index}" ${task.completed ? 'checked' : ''}>
+            <span>${task.text}</span>
+            <button class="delete-task" data-index="${index}">Hapus</button>
+        `;
         taskList.appendChild(taskItem);
         if (!task.completed) {
             remainingCount++;
