@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo List</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <h1>ToDo List</h1>
+    <form id="task-form">
+        <input type="text" id="task-input" placeholder="Masukkan tugas baru" required>
+        <button type="submit">Tambahkan Tugas</button>
+    </form>
+
+    <h2>Daftar Tugas</h2>
+    <ul class="task-list" id="task-list">
+        <!-- Tugas akan ditambahkan di sini -->
+    </ul>
+
+    <p>Total tugas belum selesai: <span id="remaining-tasks">0</span></p>
+    <button id="mark-all-completed">Tandai Semua Selesai</button>
+    <button id="clear-tasks">Hapus Semua Tugas</button>
+
+    <script src="./script.js"></script>
+</body>
+
+</html>
